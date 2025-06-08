@@ -1,1 +1,8 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=19678123&assignment_repo_type=AssignmentRepo)
+## Group Members
+Alex Chen, Daniel Shi, Carter Jones, Ayden Badyal
+
+## Project Title
+Travelytics
+
+## Brief Description
+Travelytics is a travel guide web application that allows users to explore countries. Travelytics provides information about the specific country, such as time zone, 5-day weather forecast, general information, and country flag.
