@@ -8,3 +8,5 @@ Home for AI disclosures logs
 [Carter's AI Disclosure](forms/M0_AI_Declaration_Carter_Jones_301585854.pdf)
 
 [Alex's AI Disclosure](forms/M0_AI_Declaration_Alex_Chen_301580068.pdf)
+
+## M1 AI-disclosure forms
