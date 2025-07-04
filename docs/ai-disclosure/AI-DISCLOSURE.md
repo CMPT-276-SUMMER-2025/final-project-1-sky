@@ -16,3 +16,5 @@ Home for AI disclosures logs
 [Ayden's AI Disclosure](forms/M0_AI_Declaration_Ayden_Badyal_301582013.pdf)
 
 [Alex's AI Disclosure](forms/M1_AI_Declaration_Alex_Chen_301580068.pdf)
+
+[Carter's AI Disclosure](forms/M1_AI_Declaration_Carter_Jones_301585854.pdf)
