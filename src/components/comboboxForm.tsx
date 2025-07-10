@@ -31,21 +31,21 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-const languages = [
-  { label: "English", value: "en" },
-  { label: "French", value: "fr" },
-  { label: "German", value: "de" },
-  { label: "Spanish", value: "es" },
-  { label: "Portuguese", value: "pt" },
-  { label: "Russian", value: "ru" },
-  { label: "Japanese", value: "ja" },
-  { label: "Korean", value: "ko" },
-  { label: "Chinese", value: "zh" },
+const Cities = [
+  { label: "Placeholder City1", value: "City1" },
+  { label: "Placehholder City2", value: "City2" },
+  { label: "Placehholder City3", value: "City3" },
+  { label: "Placehholder City4", value: "City4" },
+  { label: "Placehholder City5", value: "City5" },
+  { label: "Placehholder City6", value: "City6" },
+  { label: "Placehholder City7", value: "City7" },
+  { label: "Placehholder City8", value: "City8" },
+  { label: "Placehholder City9", value: "City9" },
 ] as const
 
 const FormSchema = z.object({
-  language: z.string({
-    required_error: "Please select a language.",
+  City: z.string({
+    required_error: "Please select a City.",
   }),
 })
 
@@ -66,13 +66,13 @@ export function ComboboxForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-end gap-4">
         <FormField
           control={form.control}
-          name="language"
+          name="City"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Language</FormLabel>
+              <FormLabel>City</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -85,10 +85,10 @@ export function ComboboxForm() {
                       )}
                     >
                       {field.value
-                        ? languages.find(
-                            (language) => language.value === field.value
+                        ? Cities.find(
+                            (City) => City.value === field.value
                           )?.label
-                        : "Select language"}
+                        : "Select City"}
                       <ChevronsUpDown className="opacity-50" />
                     </Button>
                   </FormControl>
@@ -102,19 +102,19 @@ export function ComboboxForm() {
                     <CommandList>
                       <CommandEmpty>No framework found.</CommandEmpty>
                       <CommandGroup>
-                        {languages.map((language) => (
+                        {Cities.map((City) => (
                           <CommandItem
-                            value={language.label}
-                            key={language.value}
+                            value={City.label}
+                            key={City.value}
                             onSelect={() => {
-                              form.setValue("language", language.value)
+                              form.setValue("City", City.value)
                             }}
                           >
-                            {language.label}
+                            {City.label}
                             <Check
                               className={cn(
                                 "ml-auto",
-                                language.value === field.value
+                                City.value === field.value
                                   ? "opacity-100"
                                   : "opacity-0"
                               )}
@@ -127,7 +127,7 @@ export function ComboboxForm() {
                 </PopoverContent>
               </Popover>
               <FormDescription>
-                This is the language that will be used in the dashboard.
+                This is the City that will be used in the dashboard.
               </FormDescription>
               <FormMessage />
             </FormItem>
