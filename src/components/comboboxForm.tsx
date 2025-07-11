@@ -44,9 +44,7 @@ const Cities = [
 ] as const
 
 const FormSchema = z.object({
-  City: z.string({
-    required_error: "Please select a City.",
-  }),
+  City: z.string().nonempty("City is required"),
 })
 
 export function ComboboxForm() {
