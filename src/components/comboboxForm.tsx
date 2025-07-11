@@ -50,6 +50,9 @@ const FormSchema = z.object({
 export function ComboboxForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      City: "",
+    },
   })
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
