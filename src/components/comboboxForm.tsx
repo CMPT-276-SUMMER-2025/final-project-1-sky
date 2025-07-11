@@ -75,7 +75,11 @@ export function ComboboxForm() {
           render={({ field }) => (
             <FormItem className="flex flex-col ">
               <FormLabel></FormLabel>
+              <div className="h-4 flex items-start ml-2">
+                <FormMessage />
+              </div>
               <Popover>
+              
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
@@ -132,12 +136,12 @@ export function ComboboxForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="mt-2">Submit</Button>
+        <Button type="submit" className="mt-8">Submit</Button>
         </div>
         <FormDescription>
           This is the City that will be used in the dashboard.
         </FormDescription>
-        <FormMessage />
+        
       </form>
     </Form>
   )
