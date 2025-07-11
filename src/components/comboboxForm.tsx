@@ -102,7 +102,7 @@ export function ComboboxForm() {
                       className="h-9"
                     />
                     <CommandList>
-                      <CommandEmpty>No framework found.</CommandEmpty>
+                      <CommandEmpty>Not a supported city</CommandEmpty>
                       <CommandGroup>
                         {Cities.map((City) => (
                           <CommandItem
