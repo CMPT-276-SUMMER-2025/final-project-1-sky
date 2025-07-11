@@ -67,7 +67,8 @@ export function ComboboxForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-end gap-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+        <div className="flex items-center gap-4">
         <FormField
           control={form.control}
           name="City"
@@ -97,7 +98,7 @@ export function ComboboxForm() {
                 <PopoverContent className="w-[200px] p-0">
                   <Command>
                     <CommandInput
-                      placeholder="Search framework..."
+                      placeholder="Search cities..."
                       className="h-9"
                     />
                     <CommandList>
@@ -127,14 +128,16 @@ export function ComboboxForm() {
                   </Command>
                 </PopoverContent>
               </Popover>
-              <FormDescription>
-                This is the City that will be used in the dashboard.
-              </FormDescription>
-              <FormMessage />
+              
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="mt-5">Submit</Button>
+        </div>
+        <FormDescription>
+          This is the City that will be used in the dashboard.
+        </FormDescription>
+        <FormMessage />
       </form>
     </Form>
   )
