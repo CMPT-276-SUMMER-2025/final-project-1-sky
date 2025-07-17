@@ -2,7 +2,7 @@ import {Accordion, AccordionItem} from "@heroui/react";
 
 export default function FAQ() {
   return (
-    <Accordion>
+    <Accordion variant = "splitted" className="space-y-0.5">
       <AccordionItem key="1" aria-label="Question A" title="Question A">
         Hi testing testing
       </AccordionItem>
