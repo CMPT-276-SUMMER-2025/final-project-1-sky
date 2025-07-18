@@ -1,148 +1,127 @@
-"use client"
-
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Check, ChevronsUpDown } from "lucide-react"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import { z } from "zod"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+"use client";
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 import {
   Command,
   CommandEmpty,
-  CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 
-const Cities = [
-  { label: "Placeholder City1", value: "City1" },
-  { label: "Placehholder City2", value: "City2" },
-  { label: "Placehholder City3", value: "City3" },
-  { label: "Placehholder City4", value: "City4" },
-  { label: "Placehholder City5", value: "City5" },
-  { label: "Placehholder City6", value: "City6" },
-  { label: "Placehholder City7", value: "City7" },
-  { label: "Placehholder City8", value: "City8" },
-  { label: "Placehholder City9", value: "City9" },
-] as const
+export interface CityOption {
+  label: string;
+  value: string;
+}
 
-const FormSchema = z.object({
-  City: z.string().nonempty("City is required"),
-})
+interface ComboboxProps {
+  options: CityOption[];
+  loading: boolean;
+  onInputChange: (value: string) => void;
+  placeholder?: string;
+}
 
-export function ComboboxForm() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      City: "",
-    },
-  })
+export function Combobox({
+  options,
+  loading,
+  onInputChange,
+  placeholder = "",
+}: ComboboxProps) {
+  const [open, setOpen] = React.useState(false);
+  const [selected, setSelected] = React.useState<CityOption | null>(null);
+  const [inputValue, setInputValue] = React.useState("");
+  const isTyping = React.useRef(false);
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast("You submitted the following values", {
-      description: (
-        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
-  }
+  // Handle input changes with debouncing
+  const handleInputChange = React.useCallback((value: string) => {
+    isTyping.current = true;
+    setInputValue(value);
+
+    if (!open) setOpen(true);
+
+    // Call parent callback
+    onInputChange(value);
+
+    // Reset typing flag after a short delay
+    setTimeout(() => {
+      isTyping.current = false;
+    }, 100);
+  }, [open, onInputChange]);
+
+  // Handle selection
+  const handleSelect = React.useCallback((option: CityOption) => {
+    setSelected(option);
+    setInputValue(option.label);
+    setOpen(false);
+    isTyping.current = false;
+  }, []);
+
+  // Handle open state changes
+  const handleOpenChange = React.useCallback((newOpen: boolean) => {
+    // Don't close if user is actively typing
+    if (!isTyping.current) {
+      setOpen(newOpen);
+    }
+  }, []);
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-        <div className="flex items-center gap-4">
-        <FormField
-          control={form.control}
-          name="City"
-          render={({ field }) => (
-            <FormItem className="flex flex-col ">
-              <FormLabel></FormLabel>
-              <div className="h-4 flex items-start ml-2">
-                <FormMessage />
+    <Popover open={open} onOpenChange={handleOpenChange}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-full justify-between"
+          onClick={() => setOpen(true)}
+        >
+          {selected ? selected.label : "Select a city"}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-full p-0">
+        <Command shouldFilter={false}>
+          <CommandInput
+            placeholder={placeholder}
+            value={inputValue}
+            onValueChange={handleInputChange}
+            onFocus={() => setOpen(true)}
+          />
+          <CommandList>
+            {loading && (
+              <div className="p-2 text-sm text-muted-foreground">
+                Loading...
               </div>
-              <Popover>
-              
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      className={cn(
-                        "w-[200px] justify-between",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value
-                        ? Cities.find(
-                            (City) => City.value === field.value
-                          )?.label
-                        : "Select City"}
-                      <ChevronsUpDown className="opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
-                  <Command>
-                    <CommandInput
-                      placeholder="Search cities..."
-                      className="h-9"
-                    />
-                    <CommandList>
-                      <CommandEmpty>Not a supported city</CommandEmpty>
-                      <CommandGroup>
-                        {Cities.map((City) => (
-                          <CommandItem
-                            value={City.label}
-                            key={City.value}
-                            onSelect={() => {
-                              form.setValue("City", City.value)
-                            }}
-                          >
-                            {City.label}
-                            <Check
-                              className={cn(
-                                "ml-auto",
-                                City.value === field.value
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-              
-            </FormItem>
-          )}
-        />
-        <Button type="submit" className="mt-8">Submit</Button>
-        </div>
-        <FormDescription>
-          This is the City that will be used in the dashboard.
-        </FormDescription>
-        
-      </form>
-    </Form>
-  )
+            )}
+            {!loading && options.length === 0 && inputValue && (
+              <CommandEmpty>No cities found.</CommandEmpty>
+            )}
+            {!loading &&
+              options.length > 0 &&
+              options.map((option) => (
+                <CommandItem
+                  key={option.value}
+                  onSelect={() => handleSelect(option)}
+                  value={option.value}
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      selected?.value === option.value ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                  {option.label}
+                </CommandItem>
+              ))}
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
 }
