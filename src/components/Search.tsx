@@ -68,7 +68,7 @@ export default function Search() {
                         const res = await fetch(`/api/geodb?search=${encodeURIComponent(input)}`);
                         const data = await res.json();
                         if (data.data) {
-                            const options = data.data.map((city: any) => ({
+                            const options = data.data.map((city: APICity) => ({
                                 label: `${city.city}, ${city.regionCode}`,
                                 value: city.id,
                             }));
