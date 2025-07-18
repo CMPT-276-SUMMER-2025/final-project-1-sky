@@ -1,29 +1,40 @@
-export async function GET(req: Request) {
-    const { searchParams } = new URL(req.url);
-    const namePrefix = searchParams.get('namePrefix');
+import { NextResponse } from "next/server";
 
-    try {
-        const response = await fetch(
-            `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${namePrefix}&limit=10`,
-            {
-                method: 'GET',
-                headers: {
-                    'X-RapidAPI-Key': process.env.RAPIDAPI_KEY!,
-                    'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
-                },
-            }
-        );
+export async function GET(request: Request) {
+  const url = new URL(request.url);
 
-        const data = await response.json();
-        return new Response(JSON.stringify(data), {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' },
-        });
-    } catch (error) {
-        console.error('GeoDB API error:', error);
-        return new Response(
-            JSON.stringify({ error: 'Error fetching data from GeoDB Cities API' }),
-            { status: 500 }
-        );
-    }
+  const pageParam = url.searchParams.get("page");
+  const search = url.searchParams.get("search") || ""; 
+
+  const page = pageParam ? parseInt(pageParam, 10) : 1;
+  const limit = 10;
+  const offset = (page - 1) * limit;
+
+  // Basic validation on page param
+  if (isNaN(page) || page < 1) {
+    return NextResponse.json({ error: "Invalid page parameter" }, { status: 400 });
+  }
+
+  const headers = {
+    "X-RapidAPI-Key": process.env.RAPIDAPI_KEY as string,
+    "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
+  };
+
+  // Use namePrefix to filter by city name prefix if search is present
+  const apiUrl = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?countryIds=CA&limit=${limit}&offset=${offset}&sort=-population${
+    search ? `&namePrefix=${encodeURIComponent(search)}` : ""
+  }`;
+
+  const res = await fetch(apiUrl, {
+    method: "GET",
+    headers,
+  });
+
+  if (!res.ok) {
+    return NextResponse.json({ error: "Failed to fetch cities" }, { status: res.status });
+  }
+
+  const data = await res.json();
+
+  return NextResponse.json(data);
 }
