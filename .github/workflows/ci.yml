@@ -21,8 +21,8 @@ jobs:
 
 
       - name: Install Dependencies
-        run: npm install
-
+      # install dependencies only from package-lock.json
+        run: npm ci
       - name: Create .env.local
         run: |
           echo "RAPIDAPI_KEY=${{ secrets.RAPIDAPI_KEY }}" >> .env.local
