@@ -22,6 +22,10 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Create .env.local
+        run: |
+          echo "RAPIDAPI_KEY=${{ secrets.RAPIDAPI_KEY }}" >> .env.local
+
       - name: Lint
         run: npm run lint
 
