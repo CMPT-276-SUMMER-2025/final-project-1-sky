@@ -19,10 +19,12 @@ jobs:
         with:
           node-version: 22.14.0
 
-
       - name: Install Dependencies
-      # install dependencies only from package-lock.json
         run: npm ci
+
+      - name: Rebuild lightningcss native module
+        run: npm rebuild lightningcss
+
       - name: Create .env.local
         run: |
           echo "RAPIDAPI_KEY=${{ secrets.RAPIDAPI_KEY }}" >> .env.local
