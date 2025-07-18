@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
+
   const pageParam = url.searchParams.get("page");
+  const search = url.searchParams.get("search") || ""; 
+
   const page = pageParam ? parseInt(pageParam, 10) : 1;
   const limit = 10;
   const offset = (page - 1) * limit;
@@ -17,7 +20,10 @@ export async function GET(request: Request) {
     "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
   };
 
-  const apiUrl = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?countryIds=CA&limit=${limit}&offset=${offset}&sort=-population`;
+  // Use namePrefix to filter by city name prefix if search is present
+  const apiUrl = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?countryIds=CA&limit=${limit}&offset=${offset}&sort=-population${
+    search ? `&namePrefix=${encodeURIComponent(search)}` : ""
+  }`;
 
   const res = await fetch(apiUrl, {
     method: "GET",
