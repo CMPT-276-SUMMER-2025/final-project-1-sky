@@ -11,7 +11,12 @@ export default function Search() {
     const [input, setInput] = useState("");
     const [cities, setCities] = useState<CityOption[]>([]);
     const [loading, setLoading] = useState(false);
-
+    // create interface to match types
+    interface APICity {
+        city: string;
+        regionCode: string;
+        id: string;
+    }
     useEffect(() => {
         const handler = setTimeout(() => {
             const fetchCities = async () => {
@@ -52,7 +57,7 @@ export default function Search() {
                             }
                         }
 
-                        const options = allCities.map((city: any) => ({
+                        const options = allCities.map((city: APICity) => ({
                             label: `${city.city}, ${city.regionCode}`,
                             value: city.id,
                         }));
@@ -63,7 +68,7 @@ export default function Search() {
                         const res = await fetch(`/api/geodb?search=${encodeURIComponent(input)}`);
                         const data = await res.json();
                         if (data.data) {
-                            const options = data.data.map((city: any) => ({
+                            const options = data.data.map((city: APICity) => ({
                                 label: `${city.city}, ${city.regionCode}`,
                                 value: city.id,
                             }));
