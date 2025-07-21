@@ -52,6 +52,7 @@ export async function GET(request: Request) {
             };
         }
 
+
         const [currentRes, forecastRes, historicalRes, airQualityRes] = await Promise.allSettled([
         // Current weather
         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`),
@@ -77,10 +78,39 @@ export async function GET(request: Request) {
             currentWeather = await currentRes.value.json();
         }
 
+        // process 5-day forecast
+        let forecast = null;
+        if (forecastRes.status === 'fulfilled' && forecastRes.value.ok) {
+            const forecastData = await forecastRes.value.json();
+            const dailyForecasts = new Map();
+        
+            forecastData.list.forEach((item: any) => {
+                const date = new Date(item.dt * 1000).toDateString();
+                if (!dailyForecasts.has(date) && dailyForecasts.size < 5) {
+                    dailyForecasts.set(date, {
+                        date: date,
+                        temp: {
+                            min: item.main.temp_min,
+                            max: item.main.temp_max,
+                            avg: item.main.temp
+                        },
+                        weather: item.weather[0],
+                        humidity: item.main.humidity,
+                        rain_chance: item.pop * 100,
+                        wind: item.wind
+                    });
+                }
+            });
+            forecast = Array.from(dailyForecasts.values());
+        }
+
+
+
         // return weather data
         const response = {
             current: currentWeather,
             coordinates: coordinates,
+            forecast_5day: forecast,
         };
   
       return NextResponse.json(response);
