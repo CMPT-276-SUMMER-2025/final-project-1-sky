@@ -104,6 +104,34 @@ export async function GET(request: Request) {
             forecast = Array.from(dailyForecasts.values());
         }
 
+        // Process past weather 7 days
+        let historical = null;
+        if (historicalRes.status === 'fulfilled') {
+            const historicalData = await Promise.allSettled(
+                historicalRes.value.map(async (res: Response, index: number) => {
+                if (res.ok) {
+                    const data = await res.json();
+                    const daysAgo = index + 1;
+                    const date = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
+                    
+                    return {
+                        date: date.toDateString(),
+                        days_ago: daysAgo,
+                        temp: data.data[0]?.temp || data.current?.temp,
+                        weather: data.data[0]?.weather[0] || data.current?.weather[0],
+                        humidity: data.data[0]?.humidity || data.current?.humidity
+                    };
+                }
+                return null;
+                })
+            );
+            
+            historical = historicalData
+                .filter(result => result.status === 'fulfilled' && result.value !== null)
+                .map(result => result.status === 'fulfilled' ? result.value : null)
+                .filter(Boolean);
+        }
+
 
 
         // return weather data
@@ -111,6 +139,7 @@ export async function GET(request: Request) {
             current: currentWeather,
             coordinates: coordinates,
             forecast_5day: forecast,
+            historical_7days: historical,
         };
   
       return NextResponse.json(response);
