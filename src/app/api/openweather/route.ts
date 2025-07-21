@@ -139,6 +139,42 @@ export async function GET(request: Request) {
                 .filter(Boolean);
         }
 
+        // Process air quality with Canadian AQHI conversion
+        let airQuality = null;
+            if (airQualityRes.status === 'fulfilled' && airQualityRes.value.ok) {
+                const airData = await airQualityRes.value.json();
+                const openWeatherAqi = airData.list[0]?.main?.aqi;
+                
+                // Convert OpenWeatherMap AQI (1-5) to Canadian AQHI-style scale (1-10+)
+                const convertToCanadianAQHI = (aqi: number) => {
+                    const conversion = {
+                        1: 2,
+                        2: 3,
+                        3: 5,
+                        4: 7,
+                        5: 10
+                    };
+                    return conversion[aqi as keyof typeof conversion] || aqi;
+                };
+                
+                // Canadian AQHI categories
+                const getCanadianAQHICategory = (aqhi: number) => {
+                    if (aqhi >= 1 && aqhi <= 3) return "Low Health Risk";
+                    if (aqhi >= 4 && aqhi <= 6) return "Moderate Health Risk";
+                    if (aqhi >= 7 && aqhi <= 10) return "High Health Risk";
+                    if (aqhi > 10) return "Very High Health Risk";
+                    return "Unknown";
+                };
+                
+                const canadianAQHI = convertToCanadianAQHI(openWeatherAqi);
+                
+                airQuality = {
+                    aqhi_canadian: canadianAQHI,
+                    category: getCanadianAQHICategory(canadianAQHI)
+                };
+            }
+
+
 
 
         // return weather data
@@ -147,6 +183,7 @@ export async function GET(request: Request) {
             coordinates: coordinates,
             forecast_5day: forecast,
             historical_7days: historical,
+            air_quality: airQuality,
         };
   
       return NextResponse.json(response);
