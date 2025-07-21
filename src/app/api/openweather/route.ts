@@ -9,7 +9,9 @@ export async function GET(request: Request) {
 
 
     if (!city && (!lat || !lon)) {
-        return NextResponse.json({ error: "Please provide either a city name or latitude and longitude" },{ status: 400 });
+        return NextResponse.json(
+            { error: "Please provide either a city name or latitude and longitude" },
+            { status: 400 });
     }
     const apiKey = process.env.OPENWEATHER_API_KEY;
     if (!apiKey) {
@@ -65,7 +67,7 @@ export async function GET(request: Request) {
           Array.from({ length: 7 }, (_, i) => {
             const SecondsInDay = 86400; 
             const timestamp = Math.floor(Date.now() / 1000) - (i + 1) * SecondsInDay;
-            return fetch(`https://api.openweathermap.org/data/3.0/onecall/timemachine?lat=${coordinates.lat}&lon=${coordinates.lon}&dt=${timestamp}&appid=${apiKey}&units=metric`);
+            return fetch(`https://history.openweathermap.org/data/2.5/history/city?lat=${coordinates.lat}&lon=${coordinates.lon}&type=hour&start=${timestamp}&cnt=1&appid=${apiKey}&units=metric`);
           })
         ),
 
@@ -110,17 +112,22 @@ export async function GET(request: Request) {
             const historicalData = await Promise.allSettled(
                 historicalRes.value.map(async (res: Response, index: number) => {
                 if (res.ok) {
-                    const data = await res.json();
+                    const data = await res.json();                    
                     const daysAgo = index + 1;
                     const date = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
-                    
-                    return {
-                        date: date.toDateString(),
-                        days_ago: daysAgo,
-                        temp: data.data[0]?.temp || data.current?.temp,
-                        weather: data.data[0]?.weather[0] || data.current?.weather[0],
-                        humidity: data.data[0]?.humidity || data.current?.humidity
-                    };
+                    const historyItem = data.list && data.list[0];
+
+                    if (historyItem) {
+                        return {
+                            date: date.toDateString(),
+                            days_ago: daysAgo,
+                            temp: historyItem.main?.temp,
+                            weather: historyItem.weather?.[0],
+                            humidity: historyItem.main?.humidity,
+                            pressure: historyItem.main?.pressure,
+                            wind: historyItem.wind
+                        };
+                    }
                 }
                 return null;
                 })
