@@ -5,6 +5,7 @@ import { Check, ChevronsUpDown } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
+import { useRouter } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -32,22 +33,22 @@ import {
 } from "@/components/ui/popover"
 
 const Cities = [
-    { id: "10908", label: "Toronto" },
-    { id: "140031", label: "Metro Vancouver" },
-    { id: "140079", label: "Montreal" },
-    { id: "10509", label: "Calgary" },
-    { id: "10520", label: "Ottawa" },
-    { id: "10232", label: "Edmonton" },
-    { id: "10141", label: "Winnipeg" },
-    { id: "10869", label: "Mississauga" },
+    "Toronto",
+    "Vancouver",
+    "Montreal",
+    "Calgary",
+    "Ottawa",
+    "Edmonton",
+    "Winnipeg",
+    "Mississauga"
 ];
-
 
 const FormSchema = z.object({
     City: z.string().nonempty("City is required"),
 })
 
 export function ComboboxForm() {
+    const router = useRouter()
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -56,13 +57,8 @@ export function ComboboxForm() {
     })
 
     function onSubmit(data: z.infer<typeof FormSchema>) {
-        toast("You submitted the following values", {
-            description: (
-                <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-                    <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-                </pre>
-            ),
-        })
+        // Navigate to info page with selected city as URL parameter
+        router.push(`/info?city=${encodeURIComponent(data.City)}`)
     }
 
     return (
@@ -79,7 +75,6 @@ export function ComboboxForm() {
                                     <FormMessage />
                                 </div>
                                 <Popover>
-
                                     <PopoverTrigger asChild>
                                         <FormControl>
                                             <Button
@@ -91,9 +86,7 @@ export function ComboboxForm() {
                                                 )}
                                             >
                                                 {field.value
-                                                    ? Cities.find(
-                                                        (City) => City.label === field.value
-                                                    )?.label
+                                                    ? Cities.find((city) => city === field.value)
                                                     : "Select City"}
                                                 <ChevronsUpDown className="opacity-50" />
                                             </Button>
@@ -108,19 +101,19 @@ export function ComboboxForm() {
                                             <CommandList>
                                                 <CommandEmpty>Not a supported city</CommandEmpty>
                                                 <CommandGroup>
-                                                    {Cities.map((City) => (
+                                                    {Cities.map((city) => (
                                                         <CommandItem
-                                                            value={City.label}
-                                                            key={City.label}
+                                                            value={city}
+                                                            key={city}
                                                             onSelect={() => {
-                                                                form.setValue("City", City.label)
+                                                                form.setValue("City", city)
                                                             }}
                                                         >
-                                                            {City.label}
+                                                            {city}
                                                             <Check
                                                                 className={cn(
                                                                     "ml-auto",
-                                                                    City.label === field.value
+                                                                    city === field.value
                                                                         ? "opacity-100"
                                                                         : "opacity-0"
                                                                 )}
@@ -132,16 +125,14 @@ export function ComboboxForm() {
                                         </Command>
                                     </PopoverContent>
                                 </Popover>
-
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className="mt-8">Submit</Button>
+                    <Button type="submit" className="mt-8">View City Info</Button>
                 </div>
                 <FormDescription>
                     This is the City that will be used in the dashboard.
                 </FormDescription>
-
             </form>
         </Form>
     )
