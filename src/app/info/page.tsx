@@ -9,7 +9,6 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Router } from "lucide-react"
 interface CityData {
     city: string
     population: number
