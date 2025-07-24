@@ -1,9 +1,10 @@
-import Search from "@/components/Search";
+import { ComboboxForm } from "@/components/comboboxForm";
+
 
 export default function Home() {
-  return (
-    <>
-      <Search />
-    </>
-  );
+    return (
+        <>
+            <ComboboxForm />
+        </>
+    );
 }
