@@ -2,6 +2,19 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
 
+    type ForecastItem = {
+        dt: number;
+        main: {
+          temp: number;
+          temp_min: number;
+          temp_max: number;
+          humidity: number;
+        };
+        weather: { description: string; icon: string }[];
+        wind: { speed: number; deg: number };
+        pop: number;
+      };
+
     const url = new URL(request.url);
     const city = url.searchParams.get("city");
     const lat = url.searchParams.get("lat");
@@ -85,8 +98,9 @@ export async function GET(request: Request) {
         if (forecastRes.status === 'fulfilled' && forecastRes.value.ok) {
             const forecastData = await forecastRes.value.json();
             const dailyForecasts = new Map();
+            
         
-            forecastData.list.forEach((item: any) => {
+            forecastData.list.forEach((item: ForecastItem) => {
                 const date = new Date(item.dt * 1000).toDateString();
                 if (!dailyForecasts.has(date) && dailyForecasts.size < 5) {
                     dailyForecasts.set(date, {
