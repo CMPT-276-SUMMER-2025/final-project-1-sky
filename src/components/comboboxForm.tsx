@@ -32,16 +32,16 @@ import {
 } from "@/components/ui/popover"
 
 const Cities = [
-    { label: "Placeholder City1", value: "City1" },
-    { label: "Placehholder City2", value: "City2" },
-    { label: "Placehholder City3", value: "City3" },
-    { label: "Placehholder City4", value: "City4" },
-    { label: "Placehholder City5", value: "City5" },
-    { label: "Placehholder City6", value: "City6" },
-    { label: "Placehholder City7", value: "City7" },
-    { label: "Placehholder City8", value: "City8" },
-    { label: "Placehholder City9", value: "City9" },
-] as const
+    { id: "10908", label: "Toronto" },
+    { id: "140031", label: "Metro Vancouver" },
+    { id: "140079", label: "Montreal" },
+    { id: "10509", label: "Calgary" },
+    { id: "10520", label: "Ottawa" },
+    { id: "10232", label: "Edmonton" },
+    { id: "10141", label: "Winnipeg" },
+    { id: "10869", label: "Mississauga" },
+];
+
 
 const FormSchema = z.object({
     City: z.string().nonempty("City is required"),
@@ -92,7 +92,7 @@ export function ComboboxForm() {
                                             >
                                                 {field.value
                                                     ? Cities.find(
-                                                        (City) => City.value === field.value
+                                                        (City) => City.label === field.value
                                                     )?.label
                                                     : "Select City"}
                                                 <ChevronsUpDown className="opacity-50" />
@@ -111,16 +111,16 @@ export function ComboboxForm() {
                                                     {Cities.map((City) => (
                                                         <CommandItem
                                                             value={City.label}
-                                                            key={City.value}
+                                                            key={City.label}
                                                             onSelect={() => {
-                                                                form.setValue("City", City.value)
+                                                                form.setValue("City", City.label)
                                                             }}
                                                         >
                                                             {City.label}
                                                             <Check
                                                                 className={cn(
                                                                     "ml-auto",
-                                                                    City.value === field.value
+                                                                    City.label === field.value
                                                                         ? "opacity-100"
                                                                         : "opacity-0"
                                                                 )}
