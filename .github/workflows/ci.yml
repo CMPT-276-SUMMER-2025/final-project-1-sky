@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-lint:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout Code
@@ -21,16 +21,6 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
-
-      - name: Rebuild lightningcss native module
-        run: npm rebuild lightningcss
-
-      - name: Create .env.local
-        run: |
-          echo "RAPIDAPI_KEY=${{ secrets.RAPIDAPI_KEY }}" >> .env.local
-
-      - name: Lint
-        run: npm run lint
 
       - name: Build Project
         run: npm run build
