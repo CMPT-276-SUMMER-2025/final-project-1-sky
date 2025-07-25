@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Router } from "lucide-react"
+
 interface CityData {
     city: string
     population: number
@@ -54,68 +55,75 @@ export default function InfoPage() {
 
         fetchCityData()
     }, [city])
+
     {/* while the information is loading, print the following */ }
     if (loading) {
         return (
-            <div className="container mx-auto p-6">
-                <div className="text-center">Loading city information...</div>
+            <div className="min-h-screen w-full px-4">
+                <div className="container mx-auto p-6">
+                    <div className="text-center">Loading city information...</div>
+                </div>
             </div>
         )
     }
 
     if (error || !cityData) {
         return (
-            <div className="container mx-auto p-6">
-                <div className="text-center text-red-600">
-                    Error: {error || "No data available"}
+            <div className="min-h-screen w-full px-4">
+                <div className="container mx-auto p-6">
+                    <div className="text-center text-red-600">
+                        Error: {error || "No data available"}
+                    </div>
                 </div>
             </div>
         )
     }
 
     return (
-        <div className="container mx-auto p-6 space-y-6">
-            <div className="flex items-center justify-between mb-6">
-                <h1 className="text-3xl font-bold">{cityData.city} Information</h1>
-                <Button variant="outline" onClick={() => router.push('/')}>Back</Button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Population</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-2xl font-bold">
-                            {cityData.population ? cityData.population.toLocaleString() : "N/A"}
-                        </p>
-                        <p className="text-sm text-gray-600">population</p>
-                    </CardContent>
-                </Card>
+        <div className="min-h-screen w-full px-4">
+            <div className="container mx-auto p-6 space-y-6">
+                <div className="flex items-center justify-between mb-6">
+                    <h1 className="text-3xl font-bold">{cityData.city} Information</h1>
+                    <Button variant="outline" onClick={() => router.push('/')}>Back</Button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Population</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-2xl font-bold">
+                                {cityData.population ? cityData.population.toLocaleString() : "N/A"}
+                            </p>
+                            <p className="text-sm text-gray-600">population</p>
+                        </CardContent>
+                    </Card>
 
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Timezone</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-2xl font-bold">{cityData.timezone || "N/A"}</p>
-                        <p className="text-sm text-gray-600">
-                            Local time: {cityData.localTime || "N/A"}
-                        </p>
-                    </CardContent>
-                </Card>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Timezone</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-2xl font-bold">{cityData.timezone || "N/A"}</p>
+                            <p className="text-sm text-gray-600">
+                                Local time: {cityData.localTime || "N/A"}
+                            </p>
+                        </CardContent>
+                    </Card>
 
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Elevation</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-2xl font-bold">
-                            {cityData.elevation ? `${cityData.elevation}m` : "N/A"}
-                        </p>
-                        <p className="text-sm text-gray-600">above sea level</p>
-                    </CardContent>
-                </Card>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Elevation</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-2xl font-bold">
+                                {cityData.elevation ? `${cityData.elevation}m` : "N/A"}
+                            </p>
+                            <p className="text-sm text-gray-600">above sea level</p>
+                        </CardContent>
+                    </Card>
+                </div>
             </div>
-        </div >
+        </div>
     )
 }
