@@ -1,7 +1,7 @@
 "use client"
 
 import { useSearchParams, useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import {
     Card,
     CardContent,
@@ -9,7 +9,6 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Router } from "lucide-react"
 
 interface CityData {
     city: string
@@ -19,7 +18,7 @@ interface CityData {
     elevation: number
 }
 
-export default function InfoPage() {
+function InfoPageContent() {
     const searchParams = useSearchParams()
     const city = searchParams.get("city")
     const [cityData, setCityData] = useState<CityData | null>(null)
@@ -59,71 +58,77 @@ export default function InfoPage() {
     {/* while the information is loading, print the following */ }
     if (loading) {
         return (
-            <div className="min-h-screen w-full px-4">
-                <div className="container mx-auto p-6">
-                    <div className="text-center">Loading city information...</div>
-                </div>
+            <div className="container mx-auto p-6 ">
+                <div className="text-center">Loading city information...</div>
             </div>
         )
     }
 
     if (error || !cityData) {
         return (
-            <div className="min-h-screen w-full px-4">
-                <div className="container mx-auto p-6">
-                    <div className="text-center text-red-600">
-                        Error: {error || "No data available"}
-                    </div>
+            <div className="container mx-auto p-6">
+                <div className="text-center text-red-600">
+                    Error: {error || "No data available"}
                 </div>
             </div>
         )
     }
 
     return (
-        <div className="min-h-screen w-full px-4">
-            <div className="container mx-auto p-6 space-y-6">
-                <div className="flex items-center justify-between mb-6">
-                    <h1 className="text-3xl font-bold">{cityData.city} Information</h1>
-                    <Button variant="outline" onClick={() => router.push('/')}>Back</Button>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Population</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-2xl font-bold">
-                                {cityData.population ? cityData.population.toLocaleString() : "N/A"}
-                            </p>
-                            <p className="text-sm text-gray-600">population</p>
-                        </CardContent>
-                    </Card>
+        <div className="min-h-screen container mx-auto p-6 space-y-6 ">
+            <div className="flex items-center justify-between mb-6">
+                <h1 className="text-3xl font-bold">{cityData.city} Information</h1>
+                <Button variant="outline" onClick={() => router.push('/')}>Back</Button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Population</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-2xl font-bold">
+                            {cityData.population ? cityData.population.toLocaleString() : "N/A"}
+                        </p>
+                        <p className="text-sm text-gray-600">population</p>
+                    </CardContent>
+                </Card>
 
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Timezone</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-2xl font-bold">{cityData.timezone || "N/A"}</p>
-                            <p className="text-sm text-gray-600">
-                                Local time: {cityData.localTime || "N/A"}
-                            </p>
-                        </CardContent>
-                    </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Timezone</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-2xl font-bold">{cityData.timezone || "N/A"}</p>
+                        <p className="text-sm text-gray-600">
+                            Local time: {cityData.localTime || "N/A"}
+                        </p>
+                    </CardContent>
+                </Card>
 
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Elevation</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-2xl font-bold">
-                                {cityData.elevation ? `${cityData.elevation}m` : "N/A"}
-                            </p>
-                            <p className="text-sm text-gray-600">above sea level</p>
-                        </CardContent>
-                    </Card>
-                </div>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Elevation</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-2xl font-bold">
+                            {cityData.elevation ? `${cityData.elevation}m` : "N/A"}
+                        </p>
+                        <p className="text-sm text-gray-600">above sea level</p>
+                    </CardContent>
+                </Card>
             </div>
         </div>
+    )
+}
+
+export default function InfoPage() {
+    return (
+        <Suspense fallback={
+            <div className="container mx-auto p-6">
+                <div className="text-center">Loading...</div>
+            </div>
+        }>
+            <InfoPageContent />
+        </Suspense>
     )
 }
