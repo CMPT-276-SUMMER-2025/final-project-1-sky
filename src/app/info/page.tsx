@@ -112,7 +112,9 @@ function InfoPageContent() {
     const searchParams = useSearchParams()
     const city = searchParams.get("city")
     const [cityData, setCityData] = useState<CityData | null>(null)
+    const [weatherData, setWeatherData] = useState<WeatherData | null>(null)
     const [loading, setLoading] = useState(true)
+    const [weatherLoading, setWeatherLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
     const router = useRouter();
 
@@ -144,6 +146,34 @@ function InfoPageContent() {
 
         fetchCityData()
     }, [city])
+
+    {/*grab weather data from API */ }
+    useEffect(() => {
+        if (!city) return
+
+        const fetchWeatherData = async () => {
+            try {
+                setWeatherLoading(true)
+                
+                const response = await fetch(`/api/weather?city=${encodeURIComponent(city)}`)
+                
+                if (!response.ok) {
+                    // Just return without weather data if API fails
+                    return
+                }
+
+                const data = await response.json()
+                setWeatherData(data)
+            } catch (err) {
+                // Silently handle errors - weather is optional
+            } finally {
+                setWeatherLoading(false)
+            }
+        }
+
+        fetchWeatherData()
+    }, [city])
+
 
     {/* while the information is loading, print the following */ }
     if (loading) {
