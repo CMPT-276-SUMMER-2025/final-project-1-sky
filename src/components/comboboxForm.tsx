@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -61,6 +62,7 @@ const FormSchema = z.object({
 })
 
 export function ComboboxForm() {
+    const [open, setOpen] = useState(false)
     const router = useRouter()
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -87,12 +89,13 @@ export function ComboboxForm() {
                                 <div className="h-4 flex items-start ml-2">
                                     <FormMessage />
                                 </div>
-                                <Popover>
+                                <Popover open={open} onOpenChange={setOpen}>
                                     <PopoverTrigger asChild>
                                         <FormControl>
                                             <Button
                                                 variant="outline"
                                                 role="combobox"
+                                                aria-expanded={open}
                                                 className={cn(
                                                     "w-[200px] justify-between",
                                                     !field.value && "text-muted-foreground"
@@ -105,7 +108,7 @@ export function ComboboxForm() {
                                             </Button>
                                         </FormControl>
                                     </PopoverTrigger>
-                                    <PopoverContent className="w-[200px] p-0">
+                                    <PopoverContent className="w-[200px] p-0" side="bottom">
                                         <Command>
                                             <CommandInput
                                                 placeholder="Search cities..."
@@ -120,6 +123,7 @@ export function ComboboxForm() {
                                                             key={city}
                                                             onSelect={() => {
                                                                 form.setValue("City", city)
+                                                                setOpen(false)
                                                             }}
                                                         >
                                                             {city}
