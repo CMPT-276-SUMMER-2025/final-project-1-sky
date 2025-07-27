@@ -120,9 +120,18 @@ export default function DocsPage() {
             </h3>
             <p className="text-slate-600 leading-relaxed max-w-2xl mx-auto">
               If you can't find the answer you're looking for in our documentation, 
-              feel free to reach out to our development team. We're continuously improving 
+              feel free to reach out to our development team through 
+              <a 
+                href="https://github.com/CMPT-276-SUMMER-2025/final-project-1-sky" 
+                className="text-blue-600 hover:underline ml-1"
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                Github
+              </a>. We're continuously improving 
               Travelytics based on user feedback and suggestions.
             </p>
+
           </div>
         </div>
       </div>
