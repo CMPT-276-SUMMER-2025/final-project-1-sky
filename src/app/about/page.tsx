@@ -89,7 +89,7 @@ export default function AboutPage() {
                 </div>
                 <div>
                   <p className="font-semibold text-slate-800">Carter Jones</p>
-                  <p className="text-sm text-slate-600">XXXXXX</p>
+                  <p className="text-sm text-slate-600">Quality Assurance Tester</p>
                 </div>
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function AboutPage() {
                 </div>
                 <div>
                   <p className="font-semibold text-slate-800">Alex Chen</p>
-                  <p className="text-sm text-slate-600">XXXX (PM)</p>
+                  <p className="text-sm text-slate-600">Project Manager</p>
                 </div>
               </div>
             </div>
@@ -113,7 +113,7 @@ export default function AboutPage() {
                 </div>
                 <div>
                   <p className="font-semibold text-slate-800">Daniel Shi</p>
-                  <p className="text-sm text-slate-600">XXXXXXX</p>
+                  <p className="text-sm text-slate-600">UI/UX Designer</p>
                 </div>
               </div>
             </div>
@@ -125,7 +125,7 @@ export default function AboutPage() {
                 </div>
                 <div>
                   <p className="font-semibold text-slate-800">Ayden Badyal</p>
-                  <p className="text-sm text-slate-600">XXXXXXX</p>
+                  <p className="text-sm text-slate-600">API integration specialist</p>
                 </div>
               </div>
             </div>
@@ -139,9 +139,8 @@ export default function AboutPage() {
               Built with Modern Technology
             </h3>
             <p className="text-slate-600 leading-relaxed">
-              Travelytics leverages cutting-edge web technologies and reliable weather APIs to deliver 
-              accurate, real-time information about Canadian cities. Our platform is designed to be 
-              fast, responsive, and user-friendly across all devices.
+              Travelytics is developed in Next.js using Typescript. The platform uses GeoNames API for city data and OpenWeatherMap API for weather information.
+              Our goal is to provide users with accurate and up-to-date information about Canadian cities and their weather.
             </p>
           </div>
         </div>
