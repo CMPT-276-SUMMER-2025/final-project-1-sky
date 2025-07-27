@@ -34,7 +34,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-blue-50 via-white to-orange-50 min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overscroll-none overflow-x-hidden bg-gradient-to-br from-blue-50 via-white to-orange-50 min-h-screen`}
       >
         <Providers>
           <Navbar />
