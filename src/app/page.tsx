@@ -3,11 +3,11 @@ import Image from "next/image";
 
 export default function Home() {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 flex flex-col items-center justify-center px-4">
+        <div className="h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 flex flex-col items-center px-4 pt-24 pb-8 overflow-hidden">
             {/* Main content container */}
-            <div className="flex flex-col items-center space-y-8">
+            <div className="flex flex-col items-center space-y-6">
                 {/* Title section with logo */}
-                <div className="bg-white/80 backdrop-blur-sm px-12 py-10 rounded-2xl shadow-xl border border-slate-200">
+                <div className="bg-white/80 backdrop-blur-sm px-12 py-8 rounded-2xl shadow-xl border border-slate-200">
                     <div className="flex flex-col items-center space-y-4">
                         <Image 
                             src="/logo.png" 
