@@ -78,7 +78,7 @@ interface WeatherData {
         }
     }>
     air_quality: {
-        aqhi_canadain: number
+        aqhi_canadian: number
         category: string
     }
 }
@@ -93,8 +93,8 @@ const getAQHIColor = (aqhi: number) => {
 }
 
 // Weather icon component
-function WeatherIcon({ weather }: { weather: string }) {
-    switch (weather) {
+function WeatherIcon({ weatherMain }: { weatherMain: string }) {
+    switch (weatherMain?.toLowerCase()) {
         case "Clear":
             return <Sun className="w-6 h-6" />
         case "Clouds":
@@ -155,7 +155,7 @@ function InfoPageContent() {
             try {
                 setWeatherLoading(true)
                 
-                const response = await fetch(`/api/weather?city=${encodeURIComponent(city)}`)
+                const response = await fetch(`/api/openweather?city=${encodeURIComponent(city)}`)
                 
                 if (!response.ok) {
                     // Just return without weather data if API fails
@@ -200,6 +200,8 @@ function InfoPageContent() {
                 <h1 className="text-3xl font-bold">{cityData.city} Information</h1>
                 <Button variant="outline" onClick={() => router.push('/')}>Back</Button>
             </div>
+
+            {/* City information cards */ }
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <Card>
                     <CardHeader>
@@ -237,6 +239,176 @@ function InfoPageContent() {
                     </CardContent>
                 </Card>
             </div>
+
+            {/* Weather Section */ }
+            {weatherLoading ? (
+                <Card>
+                    <CardContent className="p-6">
+                        <div className="text-center">Loading weather information...</div>
+                    </CardContent>
+                </Card>
+            ) : weatherData ? (
+                <>
+                    { /* Current Weather and Air quality Card */ }
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Current Weather Card */ }
+                        {weatherData.current && (
+                            <Card>
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-2">
+                                    <Thermometer className="w-5 h-5" />
+                                            Current Weather
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="flex items-center justify-between mb-4">
+                                    <div>
+                                        <p className="text-3xl font-bold">
+                                            {Math.round(weatherData.current.main.temp)}°C
+                                        </p>
+                                        <p className="text-sm text-gray-600 capitalize">
+                                            {weatherData.current.weather[0]?.description}
+                                        </p>
+                                        </div>
+                                        <WeatherIcon weatherMain={weatherData.current.weather[0]?.main} />
+                                </div>
+                                <div className="grid grid-cols-2 gap-4 text-sm">
+                                    <div className="flex items-center gap-2">
+                                        <Thermometer className="w-4 h-4" />
+                                        <span>Feels like {Math.round(weatherData.current.main.feels_like)}°C</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <Droplets className="w-4 h-4" />
+                                        <span>{weatherData.current.main.humidity}% humidity</span>
+                                    </div>
+                                        <div className="flex items-center gap-2">
+                                            <Wind className="w-4 h-4" />
+                                            <span>{weatherData.current.wind.speed} m/s</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <Eye className="w-4 h-4" />
+                                            <span>{weatherData.current.main.pressure} hPa</span>
+                                        </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        )}
+
+                        {/* Air Quality Card */ }
+                        {weatherData.air_quality && (
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle className="flex items-center gap-2">
+                                        <Activity className="w-5 h-5" />
+                                        Air Quality Index
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getAQHIColor(weatherData.air_quality.aqhi_canadian)}`}>
+                                        AQHI: {weatherData.air_quality.aqhi_canadian}
+                                    </div>
+                                    <p className="mt-2 text-lg font-semibold">
+                                        {weatherData.air_quality.category}
+                                    </p>
+                                    <p className="text-sm text-gray-600 mt-1">
+                                        Canadian Air Quality Health Index
+                                    </p>
+                                </CardContent>
+                            </Card>
+                        )}
+                    </div>
+                    {/* 5-Day Forecast */}
+                    {weatherData.forecast_5day && weatherData.forecast_5day.length > 0 && (
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>5-Day Weather Forecast</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                                    {weatherData.forecast_5day.map((day, index) => (
+                                        <div key={index} className="text-center p-3 border rounded-lg">
+                                            <p className="font-medium text-sm mb-2">
+                                                {new Date(day.date).toLocaleDateString('en-US', { 
+                                                    weekday: 'short', 
+                                                    month: 'short', 
+                                                    day: 'numeric' 
+                                                })}
+                                            </p>
+                                            <div className="flex justify-center mb-2">
+                                                <WeatherIcon weatherMain={day.weather.main} />
+                                            </div>
+                                            <p className="text-xs text-gray-600 capitalize mb-2">
+                                                {day.weather.description}
+                                            </p>
+                                            <div className="text-sm">
+                                                <p className="font-bold">{Math.round(day.temp.max)}°</p>
+                                                <p className="text-gray-600">{Math.round(day.temp.min)}°</p>
+                                            </div>
+                                            <div className="text-xs text-gray-500 mt-2">
+                                                <p>{Math.round(day.rain_chance)}% rain</p>
+                                                <p>{day.wind.speed} m/s</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
+                    {/* 7-Day Historical Weather */}
+                    {weatherData.historical_7days && weatherData.historical_7days.length > 0 && (
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>7-Day Historical Weather</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="space-y-3">
+                                    {weatherData.historical_7days.map((day, index) => (
+                                        <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                                            <div className="flex items-center gap-3">
+                                                <WeatherIcon weatherMain={day.weather?.main} />
+                                                <div>
+                                                    <p className="font-medium">
+                                                        {new Date(day.date).toLocaleDateString('en-US', { 
+                                                            weekday: 'long', 
+                                                            month: 'short', 
+                                                            day: 'numeric' 
+                                                        })}
+                                                    </p>
+                                                    <p className="text-sm text-gray-600 capitalize">
+                                                        {day.weather?.description || 'N/A'}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="text-lg font-bold">
+                                                    {day.temp ? Math.round(day.temp) : 'N/A'}°C
+                                                </p>
+                                                <div className="text-xs text-gray-500">
+                                                    <p>{day.humidity || 'N/A'}% humidity</p>
+                                                    <p>{day.wind?.speed || 'N/A'} m/s wind</p>
+                                                </div>
+                                            </div>
+                                            <div className="text-xs text-gray-400">
+                                                {day.days_ago} day{day.days_ago !== 1 ? 's' : ''} ago
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
+                </>
+            ) : (
+                <Card>
+                    <CardContent className="p-6">
+                        <div className="text-center text-gray-600">
+                            Weather information is not available for this location.
+                        </div>
+                    </CardContent>
+                </Card>
+            
+            )
+            }
         </div>
     )
 }
