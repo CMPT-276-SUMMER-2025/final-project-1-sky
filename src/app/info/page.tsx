@@ -394,7 +394,7 @@ function InfoPageContent() {
                                                 </p>
                                                 <div className="text-xs text-gray-500">
                                                     <p>{day.humidity || 'N/A'}% humidity</p>
-                                                    <p>{day.wind?.speed || 'N/A'} km/h wind</p>
+                                                    <p>{day.wind?.speed || 'N/A'} m/s wind</p>
                                                 </div>
                                             </div>
                                             <div className="text-xs text-gray-400">
