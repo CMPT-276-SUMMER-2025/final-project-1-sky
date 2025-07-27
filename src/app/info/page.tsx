@@ -9,6 +9,8 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { string } from "zod"
+import { de } from "zod/v4/locales"
 
 interface CityData {
     city: string
@@ -17,6 +19,71 @@ interface CityData {
     localTime: string
     elevation: number
 }
+
+// Defined weather data interface
+interface WeatherData {
+    current: {
+        main:{
+            temp: number
+            feels_like: number
+            humidity: number
+            pressure: number
+        }
+        weather: Array<{
+            main: string
+            description: string
+            icon: string
+        }>
+        wind: {
+            speed: number
+            deg: number
+        }
+    }
+    coordinates: {
+        lat: number
+        lon: number
+    }
+    forecast_5day: Array<{
+        date: string
+        temp: {
+            min: number
+            max: number
+            avg: number
+        }
+        weather: {
+            main: string
+            description: string
+            icon: string
+        }
+        humidity: number
+        rain_chance: number
+        wind: {
+            speed: number
+            deg: number
+        }
+    }>
+    historical_7days: Array<{
+        date: string
+        days_ago: number
+        temp: number
+        weather: {
+            main: string
+            description: string
+            icon: string
+        }
+        humidity: number
+        pressure: number
+        wind: {
+            speed: number
+            deg: number
+        }
+    }>
+    air_quality: {
+        aqhi_canadain: number
+        category: string
+    }
+}
+
 
 function InfoPageContent() {
     const searchParams = useSearchParams()
