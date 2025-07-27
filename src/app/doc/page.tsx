@@ -119,7 +119,7 @@ export default function DocsPage() {
               Need More Help?
             </h3>
             <p className="text-slate-600 leading-relaxed max-w-2xl mx-auto">
-              If you can't find the answer you're looking for in our documentation, 
+              If you can&apos;t find the answer you&apos;re looking for in our documentation, 
               feel free to reach out to our development team through 
               <a 
                 href="https://github.com/CMPT-276-SUMMER-2025/final-project-1-sky" 
@@ -128,7 +128,7 @@ export default function DocsPage() {
                 rel="noopener noreferrer"
               >
                 Github
-              </a>. We're continuously improving 
+              </a>. We&apos;re continuously improving 
               Travelytics based on user feedback and suggestions.
             </p>
 
