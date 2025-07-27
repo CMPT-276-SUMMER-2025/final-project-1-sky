@@ -93,18 +93,16 @@ const getAQHIColor = (aqhi: number) => {
 }
 
 // Weather icon component
-function WeatherIcon({ weatherMain }: { weatherMain: string }) {
+const WeatherIcon = ({ weatherMain }: { weatherMain: string }) => {
     switch (weatherMain?.toLowerCase()) {
-        case "Clear":
-            return <Sun className="w-6 h-6" />
-        case "Clouds":
-            return <Cloud className="w-6 h-6" />
-        case "Rain":
-            return <CloudRain className="w-6 h-6" />
-        case "Snow":
-            return <Droplets className="w-6 h-6" />
+        case 'clear':
+            return <Sun className="w-6 h-6 text-yellow-500" />
+        case 'clouds':
+            return <Cloud className="w-6 h-6 text-gray-500" />
+        case 'rain':
+            return <CloudRain className="w-6 h-6 text-blue-500" />
         default:
-            return <Activity className="w-6 h-6" />
+            return <Cloud className="w-6 h-6 text-gray-400" />
     }
 }
 
@@ -385,7 +383,7 @@ function InfoPageContent() {
                                                 </p>
                                                 <div className="text-xs text-gray-500">
                                                     <p>{day.humidity || 'N/A'}% humidity</p>
-                                                    <p>{day.wind?.speed || 'N/A'} m/s wind</p>
+                                                    <p>{day.wind?.speed || 'N/A'} km/h wind</p>
                                                 </div>
                                             </div>
                                             <div className="text-xs text-gray-400">
