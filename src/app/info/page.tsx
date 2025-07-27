@@ -9,8 +9,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { string } from "zod"
-import { de } from "zod/v4/locales"
+import { Cloud, Sun, CloudRain, Thermometer, Wind, Droplets, Eye, Activity } from "lucide-react"
 
 interface CityData {
     city: string
@@ -84,6 +83,30 @@ interface WeatherData {
     }
 }
 
+// Air quality color helper
+const getAQHIColor = (aqhi: number) => {
+    if (aqhi >= 1 && aqhi <= 3) return "text-green-600 bg-green-50"
+    if (aqhi >= 4 && aqhi <= 6) return "text-yellow-600 bg-yellow-50"
+    if (aqhi >= 7 && aqhi <= 10) return "text-orange-600 bg-orange-50"
+    if (aqhi > 10) return "text-red-600 bg-red-50"
+    return "text-gray-600 bg-gray-50"
+}
+
+// Weather icon component
+function WeatherIcon({ weather }: { weather: string }) {
+    switch (weather) {
+        case "Clear":
+            return <Sun className="w-6 h-6" />
+        case "Clouds":
+            return <Cloud className="w-6 h-6" />
+        case "Rain":
+            return <CloudRain className="w-6 h-6" />
+        case "Snow":
+            return <Droplets className="w-6 h-6" />
+        default:
+            return <Activity className="w-6 h-6" />
+    }
+}
 
 function InfoPageContent() {
     const searchParams = useSearchParams()
