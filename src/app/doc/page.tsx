@@ -9,12 +9,9 @@ export default function DocsPage() {
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header Section */}
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 p-8">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <span className="text-2xl font-bold text-slate-800"></span>
-            </div>
-            <h1 className="text-4xl font-bold mb-4 text-slate-800">Documentation &amp; Help</h1>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          <div className="text-center mb-6">
+            <h1 className="text-4xl font-bold text-slate-800">Documentation &amp; Help</h1>
+            <p className="text-lg text-slate-600 mt-2">
               Find answers to common questions and get help using Travelytics to discover Canadian cities.
             </p>
           </div>
