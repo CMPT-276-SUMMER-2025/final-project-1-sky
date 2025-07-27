@@ -32,15 +32,28 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 
+// List of Canadian cities for the combobox
 const Cities = [
-    "Toronto",
-    "Vancouver",
-    "Montreal",
-    "Calgary",
-    "Ottawa",
-    "Edmonton",
-    "Winnipeg",
-    "Mississauga"
+    "Toronto, Ontario",
+    "Montreal, Quebec",
+    "Calgary, Alberta",
+    "Edmonton, Alberta",
+    "Ottawa, Ontario",
+    "Winnipeg, Manitoba",
+    "Mississauga, Ontario",
+    "Brampton, Ontario",
+    "Vancouver, British Columbia",
+    "Surrey, British Columbia",
+    "Hamilton, Ontario",
+    "Quebec City, Quebec",
+    "Halifax, Nova Scotia",
+    "London, Ontario",
+    "Laval, Quebec",
+    "Markham, Ontario",
+    "Vaughan, Ontario",
+    "Gatineau, Quebec",
+    "Saskatoon, Saskatchewan",
+    "Kitchener, Ontario",
 ];
 
 const FormSchema = z.object({
