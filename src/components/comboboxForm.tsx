@@ -108,13 +108,19 @@ export function ComboboxForm() {
                                             </Button>
                                         </FormControl>
                                     </PopoverTrigger>
-                                    <PopoverContent className="w-[200px] p-0" side="bottom">
+                                    <PopoverContent 
+                                        className="w-[200px] p-0" 
+                                        side="bottom" 
+                                        align="start"
+                                        avoidCollisions={false}
+                                        sideOffset={4}
+                                    >
                                         <Command>
                                             <CommandInput
                                                 placeholder="Search cities..."
                                                 className="h-9"
                                             />
-                                            <CommandList>
+                                            <CommandList className="max-h-48 overflow-y-auto">
                                                 <CommandEmpty>Not a supported city</CommandEmpty>
                                                 <CommandGroup>
                                                     {Cities.map((city) => (
