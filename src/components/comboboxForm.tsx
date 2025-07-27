@@ -153,9 +153,11 @@ export function ComboboxForm() {
                     />
                     <Button type="submit" className="mt-8">View City Info</Button>
                 </div>
-                <FormDescription>
-                    This is the City that will be used in the dashboard.
-                </FormDescription>
+                <div className="flex justify-center">
+                    <FormDescription>
+                        This is the City that will be used in the dashboard.
+                    </FormDescription>
+                </div>
             </form>
         </Form>
     )
