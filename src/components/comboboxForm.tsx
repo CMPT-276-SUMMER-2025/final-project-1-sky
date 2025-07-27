@@ -43,13 +43,11 @@ const Cities = [
     "Winnipeg",
     "Mississauga",
     "Brampton",
-    "Hamilton",
     "Quebec City",
     "Halifax",
-    "Victoria",
-    "Kitchener"
-    
-    
+    "Kitchener",
+    "Victoria,Canada",
+    "London,Ontario",
 ];
 
 const FormSchema = z.object({
