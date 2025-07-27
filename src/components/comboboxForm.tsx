@@ -97,7 +97,7 @@ export function ComboboxForm() {
                                                 role="combobox"
                                                 aria-expanded={open}
                                                 className={cn(
-                                                    "w-[200px] justify-between",
+                                                    "w-[280px] justify-between",
                                                     !field.value && "text-muted-foreground"
                                                 )}
                                             >
@@ -109,7 +109,7 @@ export function ComboboxForm() {
                                         </FormControl>
                                     </PopoverTrigger>
                                     <PopoverContent 
-                                        className="w-[200px] p-0" 
+                                        className="w-[280px] p-0" 
                                         side="bottom" 
                                         align="start"
                                         avoidCollisions={false}
