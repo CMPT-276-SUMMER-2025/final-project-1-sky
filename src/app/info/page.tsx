@@ -296,21 +296,32 @@ function InfoPageContent() {
                         {weatherData.air_quality && (
                             <Card>
                                 <CardHeader>
-                                    <CardTitle className="flex items-center gap-2">
-                                        <Activity className="w-5 h-5" />
+                                    <CardTitle className="flex items-center justify-center gap-2"> 
                                         Air Quality Index
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getAQHIColor(weatherData.air_quality.aqhi_canadian)}`}>
-                                        AQHI: {weatherData.air_quality.aqhi_canadian}
+                                    <div className="flex flex-col items-center">
+                                        <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getAQHIColor(weatherData.air_quality.aqhi_canadian)}`}>
+                                            AQHI: {weatherData.air_quality.aqhi_canadian}
+                                        </div>
+                                        <p className="mt-2 text-lg font-semibold">
+                                            {weatherData.air_quality.category}
+                                        </p>
                                     </div>
-                                    <p className="mt-2 text-lg font-semibold">
-                                        {weatherData.air_quality.category}
-                                    </p>
-                                    <p className="text-sm text-gray-600 mt-1">
-                                        Canadian Air Quality Health Index
-                                    </p>
+
+                                    {/* Risk scale legend */}
+                                    <div className="mt-4 text-xs text-gray-500">
+                                        <div className="flex justify-between mb-1">
+                                            <span className="text-green-600">1–3: Low Risk</span>
+                                            <span className="text-yellow-600">4–6: Moderate</span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-orange-600">7–10: High</span>
+                                            <span className="text-red-600">10+: Very High</span>
+                                        </div>
+                                    </div>
+                                    
                                 </CardContent>
                             </Card>
                         )}
