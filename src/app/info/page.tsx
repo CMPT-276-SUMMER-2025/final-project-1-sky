@@ -176,10 +176,13 @@ function InfoPageContent() {
     {/* while the information is loading, print the following */ }
     if (loading) {
         return (
-                        <div className="container mx-auto p-6 ">
-                <div className="text-center">Loading city information...</div>
+            <div className="container mx-auto p-6">
+                <div className="flex items-center justify-center min-h-[50vh]">
+                    <div className="bg-white/80 backdrop-blur-sm px-8 py-6 rounded-xl shadow-lg border border-slate-200">
+                        <div className="text-center text-slate-700">Loading city information...</div>
+                    </div>
                 </div>
-
+            </div>
         )
     }
 
