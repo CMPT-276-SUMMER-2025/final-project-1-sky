@@ -10,6 +10,9 @@ export default function Home() {
                     <h1 className="text-4xl font-bold text-black text-center">
                         Travelytics
                     </h1>
+                    <p className="text-lg text-gray-700 text-center mt-2">
+                        Discover Canadian cities with real-time weather and detailed analytics
+                    </p>
                 </div>
                 
                 {/* Form section */}
