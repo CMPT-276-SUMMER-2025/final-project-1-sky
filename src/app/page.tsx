@@ -1,13 +1,10 @@
 import { ComboboxForm } from "@/components/comboboxForm";
-import { CloudsBackground } from "@/components/ui/clouds-background";
 import Image from "next/image";
 
 export default function Home() {
     return (
         <div className="h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 flex flex-col items-center px-4 pt-24 pb-8 overflow-hidden">
             {/* Background with animated clouds */}
-            <CloudsBackground className="absolute inset-0 z-0" />
-
             <div className="relative z-10 h-screen flex flex-col items-center px-4 pt-24 pb-8">
 
                 {/* Main content container */}
