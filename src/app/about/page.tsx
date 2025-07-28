@@ -43,7 +43,7 @@ export default function AboutPage() {
             <div>
               <h2 className="text-2xl font-semibold mb-4 text-slate-800">Why Travelytics?</h2>
               <div className="space-y-3">
-                <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                <div className="flex items-center gap-3 p-3 bg-blue-100 rounded-lg">
                   <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                   <span className="text-lg text-slate-700">Real-time weather data integration to help you avoid surprises</span>
                 </div>
