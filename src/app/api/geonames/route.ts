@@ -39,6 +39,11 @@ export async function GET(req: Request) {
         )
         const elevation = await elevRes.json()
 
+        console.log('GeoNames city data:', cityData);
+        console.log('Timezone data:', timezone);
+        console.log('Elevation data:', elevation);
+
+
         return NextResponse.json({
             city: name,
             population,

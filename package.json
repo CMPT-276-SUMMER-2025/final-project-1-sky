@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "node geonames-api.test.mjs"
+    "test1": "node geonames-api.test.mjs",
+    "test2": "node openweather-api.test.mjs",
+    "test-all": "npm run test1 && npm run test2"
   },
   "dependencies": {
     "@heroui/accordion": "^2.2.20",
