@@ -67,7 +67,8 @@ export async function GET(request: Request) {
           Array.from({ length: 7 }, (_, i) => {
             const SecondsInDay = 86400; 
             const timestamp = Math.floor(Date.now() / 1000) - (i + 1) * SecondsInDay;
-            return fetch(`https://history.openweathermap.org/data/2.5/history/city?lat=${coordinates.lat}&lon=${coordinates.lon}&type=hour&start=${timestamp}&cnt=1&appid=${apiKey}&units=metric`);
+            // Get 24 hours of data
+            return fetch(`https://history.openweathermap.org/data/2.5/history/city?lat=${coordinates.lat}&lon=${coordinates.lon}&type=hour&start=${timestamp}&cnt=24&appid=${apiKey}&units=metric`);
           })
         ),
 
@@ -86,24 +87,49 @@ export async function GET(request: Request) {
             const forecastData = await forecastRes.value.json();
             const dailyForecasts = new Map();
         
+            // Group all forecast entries by date
             forecastData.list.forEach((item: any) => {
                 const date = new Date(item.dt * 1000).toDateString();
-                if (!dailyForecasts.has(date) && dailyForecasts.size < 5) {
+                
+                if (!dailyForecasts.has(date)) {
                     dailyForecasts.set(date, {
                         date: date,
-                        temp: {
-                            min: item.main.temp_min,
-                            max: item.main.temp_max,
-                            avg: item.main.temp
-                        },
+                        temps: [item.main.temp],
+                        temp_mins: [item.main.temp_min],
+                        temp_maxs: [item.main.temp_max],
                         weather: item.weather[0],
-                        humidity: item.main.humidity,
-                        rain_chance: item.pop * 100,
-                        wind: item.wind
+                        humidities: [item.main.humidity],
+                        rain_chances: [item.pop * 100],
+                        winds: [item.wind]
                     });
+                } else {
+                    // Add to existing day's data
+                    const dayData = dailyForecasts.get(date);
+                    dayData.temps.push(item.main.temp);
+                    dayData.temp_mins.push(item.main.temp_min);
+                    dayData.temp_maxs.push(item.main.temp_max);
+                    dayData.humidities.push(item.main.humidity);
+                    dayData.rain_chances.push(item.pop * 100);
+                    dayData.winds.push(item.wind);
                 }
             });
-            forecast = Array.from(dailyForecasts.values());
+
+            // Calculate min/max and averages for each day
+            forecast = Array.from(dailyForecasts.values()).slice(0, 5).map(dayData => ({
+                date: dayData.date,
+                temp: {
+                    min: Math.min(...dayData.temp_mins),
+                    max: Math.max(...dayData.temp_maxs),
+                    avg: Math.round(dayData.temps.reduce((a: number, b: number) => a + b, 0) / dayData.temps.length)
+                },
+                weather: dayData.weather,
+                humidity: Math.round(dayData.humidities.reduce((a: number, b: number) => a + b, 0) / dayData.humidities.length),
+                rain_chance: Math.round(dayData.rain_chances.reduce((a: number, b: number) => a + b, 0) / dayData.rain_chances.length),
+                wind: {
+                    speed: Math.round((dayData.winds.reduce((a: number, b: any) => a + b.speed, 0) / dayData.winds.length) * 10) / 10,
+                    deg: Math.round(dayData.winds.reduce((a: number, b: any) => a + b.deg, 0) / dayData.winds.length)
+                }
+            }));
         }
 
         // Process past weather 7 days
@@ -115,17 +141,29 @@ export async function GET(request: Request) {
                     const data = await res.json();                    
                     const daysAgo = index + 1;
                     const date = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
-                    const historyItem = data.list && data.list[0];
 
-                    if (historyItem) {
+                    if (data.list && data.list.length > 0) {
+                        // Calculate min/max temperatures from all hourly data points
+                        const temps = data.list.map((item: any) => item.main?.temp).filter((temp: any) => temp !== undefined);
+                        const humidities = data.list.map((item: any) => item.main?.humidity).filter((h: any) => h !== undefined);
+                        const pressures = data.list.map((item: any) => item.main?.pressure).filter((p: any) => p !== undefined);
+                        const windSpeeds = data.list.map((item: any) => item.wind?.speed).filter((w: any) => w !== undefined);
+
                         return {
                             date: date.toDateString(),
                             days_ago: daysAgo,
-                            temp: historyItem.main?.temp,
-                            weather: historyItem.weather?.[0],
-                            humidity: historyItem.main?.humidity,
-                            pressure: historyItem.main?.pressure,
-                            wind: historyItem.wind
+                            temp: {
+                                min: temps.length > 0 ? Math.min(...temps) : null,
+                                max: temps.length > 0 ? Math.max(...temps) : null,
+                                avg: temps.length > 0 ? Math.round(temps.reduce((a: number, b: number) => a + b, 0) / temps.length) : null
+                            },
+                            weather: data.list[0].weather?.[0], // Use first entry as representative
+                            humidity: humidities.length > 0 ? Math.round(humidities.reduce((a: number, b: number) => a + b, 0) / humidities.length) : null,
+                            pressure: pressures.length > 0 ? Math.round(pressures.reduce((a: number, b: number) => a + b, 0) / pressures.length) : null,
+                            wind: {
+                                speed: windSpeeds.length > 0 ? Math.round((windSpeeds.reduce((a: number, b: number) => a + b, 0) / windSpeeds.length) * 10) / 10 : null,
+                                deg: data.list[0].wind?.deg || null
+                            }
                         };
                     }
                 }
@@ -196,4 +234,3 @@ export async function GET(request: Request) {
         );
     }
 }
-
