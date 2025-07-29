@@ -118,7 +118,45 @@ function InfoPageContent() {
     const [loading, setLoading] = useState(true)
     const [weatherLoading, setWeatherLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
+    const [currentLocalTime, setCurrentLocalTime] = useState<string>("")
     const router = useRouter();
+
+    // Live timer for local time
+    useEffect(() => {
+        let intervalId: NodeJS.Timeout | null = null;
+
+        if (cityData?.timezone) {
+            const updateTime = () => {
+                try {
+                    const now = new Date();
+                    const localTime = now.toLocaleString('en-US', {
+                        timeZone: cityData.timezone,
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: true,
+                        weekday: 'short',
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                    setCurrentLocalTime(localTime);
+                } catch (error) {
+                    // If timezone is invalid, fall back to the static time from API
+                    setCurrentLocalTime(cityData.localTime || "N/A");
+                }
+            };
+
+            updateTime(); // Initial update
+            intervalId = setInterval(updateTime, 1000); // Update every second
+        }
+
+        return () => {
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+        };
+    }, [cityData?.timezone, cityData?.localTime]);
 
     {/*grab city data from API */ }
     useEffect(() => {
@@ -237,13 +275,21 @@ function InfoPageContent() {
 
                 <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg hover:shadow-xl transition-all duration-200">
                     <CardHeader className="pb-3">
-                        <CardTitle className="text-slate-700">Timezone</CardTitle>
+                        <CardTitle className="text-slate-700">Local Time</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-2xl font-bold text-slate-700">{cityData.timezone || "N/A"}</p>
-                        <p className="text-sm text-slate-500">
-                            Local time: {cityData.localTime || "N/A"}
-                        </p>
+                        <div className="text-sm text-slate-500 space-y-1">
+                            <p className="text-lg font-semibold text-blue-600">
+                                {currentLocalTime || cityData.localTime || "N/A"}
+                            </p>
+                            {currentLocalTime && (
+                                <p className="text-xs text-green-600 flex items-center gap-1">
+                                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                    Live
+                                </p>
+                            )}
+                        </div>
                     </CardContent>
                 </Card>
 
@@ -353,7 +399,7 @@ function InfoPageContent() {
                             </Card>
                         )}
                     </div>
-                    {/* 5-Day Forecast */}
+                    {/* 5-Day Forecast - Updated to show min/max temps */}
                     {weatherData.forecast_5day && weatherData.forecast_5day.length > 0 && (
                         <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg">
                             <CardHeader className="pb-3">
@@ -393,7 +439,7 @@ function InfoPageContent() {
                             </CardContent>
                         </Card>
                     )}
-                    {/* 7-Day Historical Weather */}
+                    {/* 7-Day Historical Weather - Updated to show min/max temps */}
                     {weatherData.historical_7days && weatherData.historical_7days.length > 0 && (
                         <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg">
                             <CardHeader className="pb-3">
