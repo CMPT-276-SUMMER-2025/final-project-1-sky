@@ -19,7 +19,7 @@ interface CityData {
     elevation: number
 }
 
-// Defined weather data interface
+// Updated weather data interface
 interface WeatherData {
     current: {
         main:{
@@ -64,7 +64,11 @@ interface WeatherData {
     historical_7days: Array<{
         date: string
         days_ago: number
-        temp: number
+        temp: {
+            min: number
+            max: number
+            avg: number
+        }
         weather: {
             main: string
             description: string
@@ -377,6 +381,7 @@ function InfoPageContent() {
                                             <div className="text-sm space-y-1">
                                                 <p className="font-bold text-blue-600">{Math.round(day.temp.max)}°</p>
                                                 <p className="text-slate-500">{Math.round(day.temp.min)}°</p>
+                                                <p className="text-xs text-slate-400">Avg: {Math.round(day.temp.avg)}°</p>
                                             </div>
                                             <div className="text-xs text-slate-500 mt-3 space-y-1">
                                                 <p>{Math.round(day.rain_chance)}% rain</p>
@@ -416,10 +421,21 @@ function InfoPageContent() {
                                                 </div>
                                             </div>
                                             <div className="text-right">
-                                                <p className="text-xl font-bold text-blue-600">
-                                                    {day.temp ? Math.round(day.temp) : 'N/A'}°C
-                                                </p>
-                                                <div className="text-xs text-slate-500 space-y-1">
+                                                <div className="space-y-1">
+                                                    <div className="flex items-center gap-2 justify-end">
+                                                        <span className="text-lg font-bold text-red-500">
+                                                            {day.temp?.max ? Math.round(day.temp.max) : 'N/A'}°
+                                                        </span>
+                                                        <span className="text-sm text-slate-400">/</span>
+                                                        <span className="text-lg font-bold text-blue-500">
+                                                            {day.temp?.min ? Math.round(day.temp.min) : 'N/A'}°
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-xs text-slate-500">
+                                                        Avg: {day.temp?.avg ? Math.round(day.temp.avg) : 'N/A'}°C
+                                                    </p>
+                                                </div>
+                                                <div className="text-xs text-slate-500 space-y-1 mt-2">
                                                     <p>{day.humidity || 'N/A'}% humidity</p>
                                                     <p>{day.wind?.speed || 'N/A'} m/s wind</p>
                                                 </div>
@@ -442,9 +458,7 @@ function InfoPageContent() {
                         </div>
                     </CardContent>
                 </Card>
-            
-            )
-            }
+            )}
         </div>
     )
 }
