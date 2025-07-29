@@ -1,0 +1,44 @@
+name: Integration Tests
+
+on:
+  push:
+    branches: [ main, integration-test-ci ]
+  pull_request:
+    branches: [ main, integration-test-ci ]
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+
+    env:
+      OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+      GEODB_API_KEY: ${{ secrets.GEODB_API_KEY }}
+
+    steps:
+      # 1️⃣ Checkout repo
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2️⃣ Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 3️⃣ Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # 4️⃣ Build Next.js app (required before start)
+      - name: Build Next.js app
+        run: npm run build
+
+      # 5️⃣ Start Next.js API in background
+      - name: Start API server
+        run: |
+          npm run start &   # Next.js server
+          sleep 10          # Give it time to boot
+
+      # 6️⃣ Run integration tests (calls localhost API)
+      - name: Run API integration tests
+        run: npm run test-all
