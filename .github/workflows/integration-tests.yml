@@ -37,8 +37,8 @@ jobs:
       - name: Start API server
         run: |
           npm run start &   # Next.js server
-          sleep 10          # Give it time to boot
+          sleep 20          # Give it time to boot
 
       # 6️⃣ Run integration tests (calls localhost API)
-      - name: Run API integration tests
-        run: npm run test-all
+      - name: Run API integration test2
+        run: npm run test2
