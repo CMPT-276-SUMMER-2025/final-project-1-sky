@@ -280,7 +280,7 @@ function InfoPageContent() {
                     <CardContent>
                         <p className="text-2xl font-bold text-slate-700">{cityData.timezone || "N/A"}</p>
                         <div className="text-sm text-slate-500 space-y-1">
-                            <p className="text-lg font-semibold text-blue-600">
+                            <p className="text-lg font-semibold text-slate-600">
                                 {currentLocalTime || cityData.localTime || "N/A"}
                             </p>
                             {currentLocalTime && (
@@ -329,7 +329,7 @@ function InfoPageContent() {
                             <CardContent>
                                 <div className="flex items-center justify-between mb-4">
                                     <div>
-                                        <p className="text-4xl font-bold text-blue-600">
+                                        <p className="text-4xl font-bold text-slate-700">
                                             {Math.round(weatherData.current.main.temp)}°C
                                         </p>
                                         <p className="text-sm text-slate-600 capitalize">
@@ -425,8 +425,8 @@ function InfoPageContent() {
                                                 {day.weather.description}
                                             </p>
                                             <div className="text-sm space-y-1">
-                                                <p className="font-bold text-blue-600">{Math.round(day.temp.max)}°</p>
-                                                <p className="text-slate-500">{Math.round(day.temp.min)}°</p>
+                                                <p className="font-bold text-red-500">{Math.round(day.temp.max)}°</p>
+                                                <p className="text-blue-500">{Math.round(day.temp.min)}°</p>
                                                 <p className="text-xs text-slate-400">Avg: {Math.round(day.temp.avg)}°</p>
                                             </div>
                                             <div className="text-xs text-slate-500 mt-3 space-y-1">
