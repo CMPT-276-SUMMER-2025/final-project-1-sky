@@ -40,11 +40,12 @@ export default function RootLayout({
         <Providers>
           <Navbar />
           <CloudsBackground className="absolute inset-0 z-0" />
-          <main className="flex-1 relative z-10">
+          <main className="flex-1 relative">
             {children}
           </main>
+          
         </Providers>
-        <Footer />
+      <Footer/>
       </body>
     </html>
   );
