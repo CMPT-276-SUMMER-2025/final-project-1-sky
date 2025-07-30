@@ -39,5 +39,5 @@ jobs:
           sleep 20          # Give it time to boot
 
       # 6️⃣ Run integration tests (calls localhost API)
-      - name: Run API integration test1
-        run: npm run test1
+      - name: Run API integration tests
+        run: npm run test-all
