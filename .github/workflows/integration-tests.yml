@@ -40,4 +40,4 @@ jobs:
 
       # 6️⃣ Run integration tests (calls localhost API)
       - name: Run API integration test2
-        run: npm run test2
+        run: npm run test1
