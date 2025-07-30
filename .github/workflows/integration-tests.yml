@@ -12,7 +12,7 @@ jobs:
 
     env:
       OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
-      GEONAMES_API_KEY: ${{ secrets.GEONAMES_API_KEY }}
+      GEONAMES_USERNAME: ${{ secrets.GEONAMES_API_KEY }}
     steps:
       # 1️⃣ Checkout repo
       - name: Checkout code
@@ -39,5 +39,5 @@ jobs:
           sleep 20          # Give it time to boot
 
       # 6️⃣ Run integration tests (calls localhost API)
-      - name: Run API integration test2
+      - name: Run API integration test1
         run: npm run test1
