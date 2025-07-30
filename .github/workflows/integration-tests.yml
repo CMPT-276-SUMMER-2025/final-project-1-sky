@@ -12,8 +12,7 @@ jobs:
 
     env:
       OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
-      GEODB_API_KEY: ${{ secrets.GEODB_API_KEY }}
-
+      GEONAMES_API_KEY: ${{ secrets.GEONAMES_API_KEY }}
     steps:
       # 1️⃣ Checkout repo
       - name: Checkout code
