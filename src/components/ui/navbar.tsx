@@ -33,7 +33,7 @@ export default function Navbar() {
               About
             </Link>
             <Link href="/doc" className="hover:text-blue-600 transition-colors duration-200">
-              Docs
+              Help
             </Link>
           </nav>
         </div>
