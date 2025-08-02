@@ -23,3 +23,8 @@ Travelytics was built using Next.js, Shadcn, GeoNamesAPI and OpenWeatherAPI.
 6) Create a file called `.env.local` in the root folder for API keys. The names are the following for the APIs:
 `OPENWEATHER_API_KEY` for <strong>OpenWeatherAPI</strong>, and `GEONAMES_USERNAME` for <strong>GeoNamesAPI</strong>
 7) run `npm run dev` and open the localhost link that is provided in the terminal (usually named localhost:3000) to run the application locally.
+
+## Links to Project Website, Reports, and Videos
+[Group 1 Sky Final Presentation](https://youtu.be/Zhix20B7Iwk)
+[Group 1 Sky Final Project Website](https://travelytics276.vercel.app/)
+[Group 1 Sky Final Report]()
