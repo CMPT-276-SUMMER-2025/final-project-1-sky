@@ -46,15 +46,45 @@ const Cities = [
     "Vancouver, British Columbia",
     "Surrey, British Columbia",
     "Hamilton, Ontario",
-    "Quebec City, Quebec",
     "Halifax, Nova Scotia",
     "London, Ontario",
-    "Laval, Quebec",
     "Markham, Ontario",
     "Vaughan, Ontario",
-    "Gatineau, Quebec",
     "Saskatoon, Saskatchewan",
     "Kitchener, Ontario",
+    "Burnaby, British Columbia",
+    "Regina, Saskatchewan",
+    "Windsor, Ontario",
+    "Richmond, British Columbia",
+    "Oakville, Ontario",
+    "Burlington, Ontario",
+    "Greater Sudbury, Ontario",
+    "Oshawa, Ontario",
+    "Barrie, Ontario",
+    "St. Catharines, Ontario",
+    "Kelowna, British Columbia",
+    "Abbotsford, British Columbia",
+    "Coquitlam, British Columbia",
+    "Kingston, Ontario",
+    "Guelph, Ontario",
+    "Moncton, New Brunswick",
+    "Red Deer, Alberta",
+    "Brantford, Ontario",
+    "Thunder Bay, Ontario",
+    "White Rock, British Columbia",
+    "Langley, British Columbia",
+    "West Vancouver, British Columbia",
+    "Saint John, New Brunswick",
+    "Lethbridge, Alberta",
+    "Kamloops, British Columbia",
+    "Peterborough, Ontario",
+    "Niagara Falls, Ontario",
+    "Banff, Alberta",
+    "Chilliwack, British Columbia",
+    "Prince George, British Columbia",
+    "Richmond Hill, Ontario",
+    "Newmarket, Ontario",
+    "Laval, Quebec"
 ];
 
 const FormSchema = z.object({
@@ -108,9 +138,9 @@ export function ComboboxForm() {
                                             </Button>
                                         </FormControl>
                                     </PopoverTrigger>
-                                    <PopoverContent 
-                                        className="w-[320px] p-0 bg-white border-slate-200 shadow-lg" 
-                                        side="bottom" 
+                                    <PopoverContent
+                                        className="w-[320px] p-0 bg-white border-slate-200 shadow-lg"
+                                        side="bottom"
                                         align="start"
                                         avoidCollisions={false}
                                         sideOffset={4}
@@ -154,8 +184,8 @@ export function ComboboxForm() {
                             </FormItem>
                         )}
                     />
-                    <Button 
-                        type="submit" 
+                    <Button
+                        type="submit"
                         className="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
                     >
                         View City Info
