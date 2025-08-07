@@ -1,3 +1,10 @@
+/*
+    Page for main dashboard. This file contains everything
+    displayed when a city is searched. 
+
+    Contains all tailwind styling for the dashboard
+ */
+
 "use client"
 
 import { useSearchParams, useRouter } from "next/navigation"
