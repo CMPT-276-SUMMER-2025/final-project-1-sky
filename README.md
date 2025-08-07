@@ -27,7 +27,7 @@ Travelytics was built using Next.js, Shadcn, GeoNamesAPI and OpenWeatherAPI.
 5) Navigate to the project using `cd final-project-1-sky`
 6) In the project root, run `npm install` to install all necessary packages.
 > HINT: root is the base folder, i.e. `final-project-1-sky` should be the last folder name to be displayed on the terminal like so: `/../../final-project-1-sky`
-8) Create a file called `.env.local` in the root folder for API keys. At the first line of the `.env.local` file, you will need to input two variables. The variable names are the following for the APIs:
+8) Create a file called `.env.local` in the root folder for API keys. On the first two lines of the `.env.local` file, you will need to input two variables. The variable names are the following for the APIs:
 `OPENWEATHER_API_KEY` for <strong>OpenWeatherAPI</strong>, and `GEONAMES_USERNAME` for <strong>GeoNamesAPI</strong>
 9) run `npm run dev` and open the localhost link that is provided in the terminal (usually named localhost:3000) to run the application locally.
 
