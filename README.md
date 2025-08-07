@@ -37,4 +37,4 @@ Travelytics was built using Next.js, Shadcn, GeoNamesAPI and OpenWeatherAPI.
 
 [Group 1 Sky Final Project Website](https://travelytics276.vercel.app/)
 
-[Group 1 Sky Final Report]()
+[Group 1 Sky Final Report](./docs/reports/CMPT276_Group1_Sky_M1_Final_Report.pdf)
