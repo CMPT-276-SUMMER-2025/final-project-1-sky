@@ -1,5 +1,10 @@
 import Image from "next/image";
 
+/*
+    This page contains all elements of the about page 
+    for travelytics
+*/
+
 export default function AboutPage() {
   return (
     <div className="min-h-screen w-full px-4 py-8">
