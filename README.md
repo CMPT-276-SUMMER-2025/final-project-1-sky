@@ -15,12 +15,14 @@ Travelytics was built using Next.js, Shadcn, GeoNamesAPI and OpenWeatherAPI.
 [Link to Feedback Form](https://docs.google.com/forms/d/1XZk8IoOraZ1cLlg-FjbrqMqVwN33C6jESV8F_CJ-lV0/edit)
 
 ## How to Deploy Locally
->NOTE: The following steps assume you have `git` and `node.js` installed on your local machine.
->You can download these tools with the following links and follow the instructions on the respective websites to learn how to install them:
+>NOTE: The following steps assume you have `git`, `node.js` and any text editor, like Visual Studio Code installed on your local machine.
+>You can download these tools with the following links and follow the instructions on the respective websites to learn how to install them (make sure to install the correct executable for your operating system!):
 >
 >node.js: https://nodejs.org/en/download
 >
 >git: https://git-scm.com/downloads
+>
+> Visual Studio Code: https://code.visualstudio.com/download
 1) Clone this repository by clicking the green `Code` button. Select either HTTPS or SSH, depending on the connection used on your local machine and click the copy button next to the link. To find out if you are using an SSH connection, type `ssh -T git@github.com` in any terminal. If there is output such as "Hi `username`! You've successfully authenticated, but GitHub does not provide shell access." then you are using SSH, and if not then you will need to clone using HTTPS. 
 2) Launch a terminal. Then, in a terminal, navigate to a directory that you want to clone the project in using `cd <path>`, where `path` is a desired folder.
 4) In the terminal, type `git clone` followed by space and then press `cntrl-v` (paste) to paste the github repository URL. 
