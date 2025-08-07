@@ -1,5 +1,18 @@
 import { fetchCityInfo } from '../../src/services/geonamesService';
 
+/**
+ * GeoNames Service Unit Tests
+ * 
+ * Tests the `geonamesService.ts` functions in isolation.
+ * Mocks external API calls to GeoNames to ensure:
+ *  - Proper request handling
+ *  - Correct error throwing for invalid inputs
+ *  - Accurate parsing of API responses
+ * 
+ * These tests verify internal service logic independent
+ * of Next.js API routes.
+ */
+
 global.fetch = jest.fn();
 
 describe('fetchCityInfo Unit Tests', () => {

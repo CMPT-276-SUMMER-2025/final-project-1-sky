@@ -1,4 +1,20 @@
 // src/services/openWeatherService.ts
+
+/**
+ * OpenWeather Service
+ * 
+ * Provides functions to interact with the OpenWeatherMap API.
+ * Fetches and processes:
+ *  - Current weather
+ *  - 5-day forecast
+ *  - 7-day historical weather
+ *  - Air quality index (AQHI)
+ * 
+ * Returns structured, normalized data to be used by the 
+ * `/api/openweather` route and front-end components.
+ * Tested by unit and integration tests in the `tests` directory.
+ */
+
 export async function fetchOpenWeatherData(city: string | null, lat: string | null, lon: string | null, apiKey: string) {
   if (!city && (!lat || !lon)) {
     throw new Error("Please provide either a city name or latitude and longitude");

@@ -1,5 +1,14 @@
 import fetch from 'cross-fetch';
 
+/**
+ * GeoNames API Integration Tests
+ * 
+ * Tests the `/api/geonames` Next.js route end-to-end.
+ * Verifies correct HTTP responses, data shape, and error handling.
+ * Ensures the route interacts with GeoNames API as expected 
+ * and returns results in the correct JSON format.
+ */
+
 describe('GeoNames API Integration Tests', () => {
 	const baseUrl = 'http://localhost:3000/api/geonames';
 

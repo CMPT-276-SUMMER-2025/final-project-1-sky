@@ -1,6 +1,21 @@
 import { NextResponse } from "next/server";
 import { fetchOpenWeatherData } from "@/services/openweatherService";
 
+/**
+ * OpenWeather API Route (/api/openweather)
+ * 
+ * Next.js API endpoint for retrieving weather data from OpenWeatherMap.
+ * Accepts `city` (or `lat`/`lon`) query parameters and returns:
+ *  - Current weather
+ *  - 5-day forecast
+ *  - 7-day historical weather
+ *  - Air quality index (AQHI)
+ * 
+ * Uses `openweatherService.ts` to fetch and process data.
+ * Handles errors gracefully and outputs a standardized JSON response.
+ */
+
+
 export async function GET(request: Request) {
   try {
     const url = new URL(request.url);

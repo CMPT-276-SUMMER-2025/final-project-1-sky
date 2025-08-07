@@ -1,5 +1,20 @@
 import { fetchOpenWeatherData } from '../../src/services/openweatherService';
 
+/**
+ * OpenWeather Service Unit Tests
+ * 
+ * Tests the `openweatherService.ts` functions in isolation.
+ * Mocks OpenWeatherMap API calls for:
+ *  - Current weather
+ *  - 5-day forecast
+ *  - 7-day historical weather
+ *  - Air quality index
+ * 
+ * Ensures the service correctly processes responses,
+ * handles missing data gracefully, and throws errors
+ * for invalid inputs or API failures.
+ */
+
 describe('fetchOpenWeatherData Unit Tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -73,7 +88,7 @@ describe('fetchOpenWeatherData Unit Tests', () => {
                 weather: [{ main: 'Cloudy' }],
                 wind: { speed: 3 + i, deg: 170 + i },
             },
-            // more hourly data points could be added here if you want
+            // more hourly data points could be added
             ],
         }),
         })),
