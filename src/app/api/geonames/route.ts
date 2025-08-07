@@ -2,6 +2,17 @@
 import { NextResponse } from "next/server";
 import { fetchCityInfo } from "@/services/geonamesService";
 
+/**
+ * GeoNames API Route (/api/geonames)
+ * 
+ * Next.js API endpoint for retrieving city details from GeoNames.
+ * Accepts a `city` query parameter and returns structured
+ * information (population, country, lat/lon, etc.).
+ * 
+ * Uses `geonamesService.ts` to interact with the GeoNames API.
+ * Handles error responses and ensures consistent output format.
+ */
+
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const city = url.searchParams.get("city");
