@@ -37,3 +37,11 @@ Home for AI disclosures logs
 [Alex's AI Disclosure](forms/M2_Video_AI_Declaration_Alex_Chen_301580068.pdf)
 
 [Carter's AI Disclosure](forms/M2_Video_AI_Declaration_Carter_Jones_301585854.pdf)
+
+[Ayden's AI Disclosure](forms/M2_Video_AI_Declaration_Ayden_Badyal_301582013.pdf)
+
+[Daniel's AI Disclosure](forms/M2_Video_AI_Declaration_Daniel_Shi_301594914.pdf)
+
+[Carter's AI Disclosure](forms/M2_Code_AI_Declaration_Carter_Jones_301585854.pdf)
+
+[Carter's AI Disclosure](forms/M2_Report_AI_Declaration_Carter_Jones_301585854.pdf)
