@@ -1,5 +1,11 @@
 "use client";
 
+/*
+    Docs/Help page for Travelytics.
+
+    Info and styling is in this file
+*/
+
 import FAQ from "@/components/ui/FAQ";
 import Image from "next/image";
 
