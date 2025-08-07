@@ -1,5 +1,10 @@
 "use client"
 
+/*
+    File that handles the logic of the drop down menu
+    on the landing page of the website
+ */
+
 import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
