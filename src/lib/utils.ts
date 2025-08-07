@@ -1,3 +1,4 @@
+/*helper function for HeroUI components*/
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 

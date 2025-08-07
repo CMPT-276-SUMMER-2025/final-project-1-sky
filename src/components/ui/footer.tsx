@@ -1,3 +1,4 @@
+/*github icon footer */
 export default function Footer() {
   return (
     <a

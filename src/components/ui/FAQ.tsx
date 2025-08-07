@@ -1,3 +1,4 @@
+/*Expandable FAQ used in help/docs page*/ 
 import {Accordion, AccordionItem} from "@heroui/react";
 
 export default function FAQ() {
