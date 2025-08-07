@@ -15,7 +15,7 @@ Travelytics was built using Next.js, Shadcn, GeoNamesAPI and OpenWeatherAPI.
 [Link to Feedback Form](https://docs.google.com/forms/d/1XZk8IoOraZ1cLlg-FjbrqMqVwN33C6jESV8F_CJ-lV0/edit)
 
 ## How to Deploy Locally
->NOTE: The following steps assume you have `git`, `node.js` and any text editor, like Visual Studio Code installed on your local machine.
+>NOTE: The following steps assume you have `git`, `node.js` and any interactive development environment, like Visual Studio Code installed on your local machine.
 >You can download these tools with the following links and follow the instructions on the respective websites to learn how to install them (make sure to install the correct executable for your operating system!):
 >
 >node.js: https://nodejs.org/en/download
