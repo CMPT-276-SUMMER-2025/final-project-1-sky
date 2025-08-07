@@ -1,15 +1,11 @@
-const { createDefaultPreset } = require("ts-jest");
+const { pathsToModuleNameMapper } = require('ts-jest');
+const { compilerOptions } = require('./tsconfig');
 
-const tsJestTransformCfg = createDefaultPreset().transform;
-
-/** @type {import("jest").Config} */
 module.exports = {
-  testEnvironment: "node",
-  transform: {
-    ...tsJestTransformCfg,
-  },
-  moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1",
-  },
-  moduleDirectories: ["node_modules", "<rootDir>/src"],
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths || {}, {
+    prefix: '<rootDir>/',
+  }),
+  moduleDirectories: ['node_modules', 'src'],
 };
