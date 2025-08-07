@@ -1,5 +1,15 @@
 import fetch from 'cross-fetch';
 
+/**
+ * OpenWeather API Integration Tests
+ * 
+ * Tests the `/api/openweather` Next.js route end-to-end.
+ * Validates correct API behavior for:
+ *  - Successful requests with city input
+ *  - Error handling for missing/invalid inputs
+ *  - Structure and type of returned weather, forecast, and AQHI data
+ */
+
 describe('OpenWeather API Integration Tests', () => {
   const baseUrl = 'http://localhost:3000/api/openweather';
 
@@ -8,19 +18,19 @@ describe('OpenWeather API Integration Tests', () => {
     expect(res.status).toBe(200);
     const data = await res.json();
 
-    // ----- Coordinates -----
+    //  Coordinates 
     expect(data.coordinates).toBeDefined();
     expect(typeof data.coordinates.lat).toBe('number');
     expect(typeof data.coordinates.lon).toBe('number');
 
-    // ----- Current Weather -----
+    // Current Weather 
     expect(data.current).toBeDefined();
     expect(typeof data.current.main.temp).toBe('number');
     expect(typeof data.current.main.humidity).toBe('number');
     expect(Array.isArray(data.current.weather)).toBe(true);
     expect(typeof data.current.weather[0].main).toBe('string');
 
-    // ----- Forecast 5-Day -----
+    //  Forecast 5-Day 
     expect(Array.isArray(data.forecast_5day)).toBe(true);
     if (data.forecast_5day.length > 0) {
       const forecastItem = data.forecast_5day[0];
@@ -35,7 +45,7 @@ describe('OpenWeather API Integration Tests', () => {
       expect(typeof forecastItem.wind.deg).toBe('number');
     }
 
-    // ----- Historical 7-Days -----
+    //  Historical 7-Days 
     expect(Array.isArray(data.historical_7days)).toBe(true);
     if (data.historical_7days.length > 0) {
       const histItem = data.historical_7days[0];
@@ -51,7 +61,7 @@ describe('OpenWeather API Integration Tests', () => {
       expect(typeof histItem.wind.deg).toBe('number');
     }
 
-    // ----- Air Quality -----
+    //  Air Quality 
     expect(data.air_quality).toBeDefined();
     expect(typeof data.air_quality.aqhi_canadian).toBe('number');
     expect(typeof data.air_quality.category).toBe('string');
