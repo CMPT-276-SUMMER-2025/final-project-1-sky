@@ -1,3 +1,5 @@
+/*helper component for Popover UI used in landing page search bar*/
+
 "use client"
 
 import * as React from "react"
