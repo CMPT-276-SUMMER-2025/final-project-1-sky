@@ -16,7 +16,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Cloud, Sun, CloudRain, Thermometer, Wind, Droplets, Eye, Activity, ArrowLeft } from "lucide-react"
+import { Cloud, Sun, CloudRain, Thermometer, Wind, Droplets, Eye, Activity, ArrowLeft, Plus } from "lucide-react"
 
 interface CityData {
     city: string
@@ -255,16 +255,32 @@ function InfoPageContent() {
             <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-slate-200 p-6">
                 <div className="flex items-center justify-between">
                     <h1 className="text-3xl font-bold text-slate-800">{cityData.city} Information</h1>
-                    <Button 
-                        variant="outline" 
-                        onClick={() => router.push('/')}
-                        className="bg-white hover:bg-blue-50 border-blue-200 text-blue-600 hover:text-blue-700 transition-all duration-200"
-                    >
-                        <ArrowLeft className="w-4 h-4 mr-2" />
-                        Back to Home
-                    </Button>
+                    <div className="flex items-center gap-3">
+                        <Button 
+                            variant="outline" 
+                            onClick={() => {
+                                if (city) {
+                                    router.push(`/compare?cities=${encodeURIComponent(city)}`)
+                                }
+                            }}
+                            disabled={!city}
+                            className="bg-white hover:bg-green-50 border-green-200 text-green-600 hover:text-green-700 transition-all duration-200"
+                        >
+                            <Plus className="w-4 h-4 mr-2" />
+                            Compare Cities
+                        </Button>
+                        <Button 
+                            variant="outline" 
+                            onClick={() => router.push('/')}
+                            className="bg-white hover:bg-blue-50 border-blue-200 text-blue-600 hover:text-blue-700 transition-all duration-200"
+                        >
+                            <ArrowLeft className="w-4 h-4 mr-2" />
+                            Back to Home
+                        </Button>
+                    </div>
                 </div>
             </div>
+
 
             {/* City information cards */ }
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
